@@ -2,7 +2,7 @@
 This is re-implementation of Google's UDA [[paper]](https://arxiv.org/abs/1904.12848)[[tensorflow]](https://github.com/google-research/uda) in pytorch with Kakao Brain's Pytorchic BERT[[pytorch]](https://github.com/dhlee347/pytorchic-bert).
 
 本仓库在[此仓库](https://github.com/SanghunYun/UDA_pytorch)的基础上,修改了部分错误。推荐看其issue部分。
-Model  | UDA official | 本仓库
+Model  | UDA official | This repository
 -- | -- | --
 UDA (X) | 68% |  
 UDA (O) | 90% | 91.2%
