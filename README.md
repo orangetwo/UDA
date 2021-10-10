@@ -1,20 +1,17 @@
 # UDA(Unsupervised Data Augmentation) with BERT
 This is re-implementation of Google's UDA [[paper]](https://arxiv.org/abs/1904.12848)[[tensorflow]](https://github.com/google-research/uda) in pytorch with Kakao Brain's Pytorchic BERT[[pytorch]](https://github.com/dhlee347/pytorchic-bert).
 
-Model  | UDA official | This repository
+本仓库在此仓库(https://github.com/SanghunYun/UDA_pytorch)的基础上,修改了部分错误。
+Model  | UDA official | 本仓库
 -- | -- | --
 UDA (X) | 68% |  
-UDA (O) | 90% | 88.45%
+UDA (O) | 90% | 91.2%
 
-(Max sequence length = 128, Train batch size = 8)
+(Max sequence length = 128, Train batch size = 8, 不使用sharpening和Confidence-based masking)
 
-![](README_data/2019-08-30-22-18-28.png)
 
 
 ## UDA
-> UDA(Unsupervised Data Augmentation) is a semi-supervised learning method which achieves SOTA results on a wide variety of language and vision tasks. With only 20 labeled examples, UDA outperforms the previous SOTA on IMDb trained on 25,000 labeled examples. (BERT=4.51, UDA=4.20, error rate)
-![](README_data/2019-08-21-18-01-07.png)
-> * Unsupervised Data Augmentation for Consistency Training (2019 Google Brain, Q Xie et al.)
 
 #### - UDA with BERT
 UDA works as part of BERT. It means that UDA act as an assistant of BERT. So, in the picture above model **M** is BERT.
@@ -25,8 +22,6 @@ The supervised loss and unsupervised loss are added to form a total loss and the
 
 #### - TSA(Training Signal Annealing)
 There is a large gap between the amount of unlabeled data and that of labeled data. So, it is easy to overfit to labeled data. Therefore, TSA technique mask out the examples that predicted probability is bigger than threshold. The threshold is scheduled by log, linear or exponential function.<br />
-  ![](README_data/2019-08-22-14-16-49.png) <br />
-  ![](README_data/2019-08-22-14-16-59.png) <br />
 
 #### - Sharpening Predictions
 The KL-divergence loss(ori, aug) is too small to just use. It can cause that the total loss is dominated by supervised loss. Therefore, Sharpening Prediction techniques is needed.
@@ -85,12 +80,3 @@ This project are broadly divided into two parts(Fine-tuning, Evaluation).<br/>
         python main.py \
             --cfg='config/eval.json' \
             --model_cfg='config/bert_base.json'
-
-
-## Acknowledgement
-Thanks to references of [UDA](https://github.com/google-research/uda) and [Pytorchic BERT](https://github.com/dhlee347/pytorchic-bert), I can implement this code.
-
-## TODO
-1. It is known that further training(more pre-training by the specific corpus on already pre-trained BERT) can improve performance. But, this repository does not have pretrain code. So, pretrain code will be added. If you want to further training you can use [Pytorchic BERT](https://github.com/dhlee347/pytorchic-bert) 's pretrain.py or any BERT project.
-
-2. Korean dataset version
